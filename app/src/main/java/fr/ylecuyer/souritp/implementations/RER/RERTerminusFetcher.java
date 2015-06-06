@@ -34,11 +34,11 @@ public class RERTerminusFetcher extends BaseTerminusFetcher {
 
         int offset = 0;
 
-        if (line.getLineId().toUpperCase() == "B") {
+        if (line.getLineId().toUpperCase().equals("B")) {
             offset += 2;
         }
 
-        for (int i = 0; i < 2; i++, offset++) {
+        for (int i = 0; i < 2; i++) {
 
             Element element = elements.get(offset+i);
 
