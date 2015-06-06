@@ -11,10 +11,10 @@ import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.R;
 
-@EViewGroup(R.layout.terminus_spinner_item)
+@EViewGroup(android.R.layout.simple_spinner_dropdown_item)
 public class TerminusSpinnerItemView extends LinearLayout {
 
-    @ViewById
+    @ViewById(android.R.id.text1)
     TextView terminusName;
 
     public TerminusSpinnerItemView(Context context) {

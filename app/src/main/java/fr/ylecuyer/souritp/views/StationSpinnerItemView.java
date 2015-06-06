@@ -10,10 +10,10 @@ import org.androidannotations.annotations.ViewById;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.R;
 
-@EViewGroup(R.layout.station_spinner_item)
+@EViewGroup(android.R.layout.simple_spinner_dropdown_item)
 public class StationSpinnerItemView extends LinearLayout {
 
-    @ViewById
+    @ViewById(android.R.id.text1)
     TextView stationName;
 
     public StationSpinnerItemView(Context context) {
