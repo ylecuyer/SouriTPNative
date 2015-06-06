@@ -46,6 +46,11 @@ public class BusStopFetcher extends BaseStopFetcher {
             String terminus = td.first().ownText();
             String waitTime = td.last().ownText();
 
+            if (waitTime.length() == 0) {
+                waitTime = terminus;
+                terminus = "";
+            }
+
             Stop stop = new Stop(terminus, waitTime, line);
 
             Log.d("SouriTP", stop.toString());
