@@ -1,0 +1,61 @@
+#
+# generated on 2015/06/06 10:43:20
+#
+# --table-start--
+dataClass=fr.ylecuyer.souritp.DAO.DaoRoute
+tableName=routes
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=stations
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=fr.ylecuyer.souritp.DAO.DaoStation
+tableName=stations
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=stationId
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=lineId
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=terminusId
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=terminusName
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=mode
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=route
+canBeNull=false
+foreign=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
