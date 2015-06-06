@@ -3,11 +3,15 @@ package fr.ylecuyer.souritp.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.ForeignCollection;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.ylecuyer.souritp.DAO.DaoRoute;
+import fr.ylecuyer.souritp.DAO.DaoStation;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.R;
@@ -50,6 +55,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<DaoRoute, Long> routeDao;
 
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<DaoStation, Long> stationDao;
+
     @Bean
     RouteListAdapter adapter;
 
@@ -58,6 +66,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         updateAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
     }
 
     @Click
@@ -93,5 +102,46 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         Log.d("SouriTP", "Showing route: " + id);
 
         ShowRouteActivity_.intent(this).routeId(id).start();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.listView) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.context_menu_main, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        long routeId = listView.getAdapter().getItemId(position);
+
+        switch(item.getItemId()) {
+            case R.id.edit:
+                // edit stuff here
+                return true;
+            case R.id.delete:
+
+                try {
+                    DaoRoute route = routeDao.queryForId(routeId);
+                    ForeignCollection<DaoStation> stations = route.getStations();
+
+                    stationDao.delete(stations);
+                    routeDao.delete(route);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                updateAdapter();
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
