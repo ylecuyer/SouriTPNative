@@ -2,6 +2,8 @@ package fr.ylecuyer.souritp.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -151,21 +153,20 @@ public class NewRouteActivity extends Activity {
 
         lineText = (EditText)view.findViewById(R.id.lineId);
 
-        lineText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        lineText.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    //hide keyboard
-                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            }
 
-                    updateDirections();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateDirections();
+            }
 
-                    return true;
-                }
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                return false;
             }
         });
 
@@ -301,7 +302,7 @@ public class NewRouteActivity extends Activity {
             finish();
         }
         catch (SQLException ex){
-            Log.d("SouriTP", "error");
+            ex.printStackTrace();
         }
     }
 }

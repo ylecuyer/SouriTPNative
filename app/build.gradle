@@ -46,4 +46,8 @@ dependencies {
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.afollestad:material-dialogs:0.7.5.1'
     compile 'de.timroes.android:EnhancedListView:0.3.4'
+    compile('com.github.ganfra:material-spinner:1.1.0') {
+        exclude group: 'com.nineoldandroids', module: 'library'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
 }
