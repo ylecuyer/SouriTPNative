@@ -21,7 +21,7 @@ public class TramStationFetcher extends BaseStationFetcher {
     public TramStationFetcher(Line line, Direction direction) {
         super(line, direction);
 
-        if (!line.getLineId().matches("[1-2]|3[ab]|[4-8]"))
+        if (!line.getLineId().toLowerCase().matches("[1-2]|3[ab]|[4-8]"))
             throw new UnsupportedOperationException("Contact yoann.lecuyer@gmail.com");
     }
 

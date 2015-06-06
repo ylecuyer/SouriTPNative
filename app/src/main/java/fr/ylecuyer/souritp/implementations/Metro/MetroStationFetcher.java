@@ -21,7 +21,7 @@ public class MetroStationFetcher extends BaseStationFetcher {
     public MetroStationFetcher(Line line, Direction direction) {
         super(line, direction);
 
-        if (!line.getLineId().matches("[1-2]|3b?|[4-6]|7b?|[8-9]|1[0-4]"))
+        if (!line.getLineId().toLowerCase().matches("[1-2]|3b?|[4-6]|7b?|[8-9]|1[0-4]"))
             throw new UnsupportedOperationException("Contact yoann.lecuyer@gmail.com");
     }
 

@@ -21,7 +21,7 @@ public class RERStationFetcher extends BaseStationFetcher {
     public RERStationFetcher(Line line, Direction direction) {
         super(line, direction);
 
-        if (!line.getLineId().matches("A|B"))
+        if (!line.getLineId().toLowerCase().matches("a|b"))
             throw new UnsupportedOperationException("Contact yoann.lecuyer@gmail.com");
     }
 
