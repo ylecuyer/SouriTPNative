@@ -20,8 +20,8 @@ import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 public class MetroStopFetcher extends BaseStopFetcher {
 
-    public MetroStopFetcher(Station station, Terminus terminus) {
-        super(station, terminus);
+    public MetroStopFetcher(Station station, Terminus terminus, String lineId) {
+        super(station, terminus, lineId);
     }
 
     @Override
@@ -39,6 +39,8 @@ public class MetroStopFetcher extends BaseStopFetcher {
 
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
+        Line line = new Line(lineId, terminus, "METRO");
+
         for (Element element : elements) {
 
             Elements td = element.select("td");
@@ -46,7 +48,7 @@ public class MetroStopFetcher extends BaseStopFetcher {
             String terminus = td.first().ownText();
             String waitTime = td.last().ownText();
 
-            Stop stop = new Stop(terminus, waitTime);
+            Stop stop = new Stop(terminus, waitTime, line);
 
             Log.d("SouriTP", stop.toString());
 

@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
@@ -19,8 +20,8 @@ import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 public class TramStopFetcher extends BaseStopFetcher {
 
-    public TramStopFetcher(Station station, Terminus terminus) {
-        super(station, terminus);
+    public TramStopFetcher(Station station, Terminus terminus, String lineId) {
+        super(station, terminus, lineId);
     }
 
     @Override
@@ -38,6 +39,8 @@ public class TramStopFetcher extends BaseStopFetcher {
 
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
+        Line line = new Line(lineId, terminus, "TRAM");
+
         for (Element element : elements) {
 
             Elements td = element.select("td");
@@ -45,7 +48,7 @@ public class TramStopFetcher extends BaseStopFetcher {
             String terminus = td.first().ownText();
             String waitTime = td.last().ownText();
 
-            Stop stop = new Stop(terminus, waitTime);
+            Stop stop = new Stop(terminus, waitTime, line);
 
             Log.d("SouriTP", stop.toString());
 

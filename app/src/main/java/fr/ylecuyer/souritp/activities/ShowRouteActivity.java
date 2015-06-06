@@ -114,16 +114,16 @@ public class ShowRouteActivity extends Activity {
 
             switch (mode.toUpperCase()) {
                 case "BUS":
-                    stopFetcher = new BusStopFetcher(sta, terminus);
+                    stopFetcher = new BusStopFetcher(sta, terminus, lineId);
                     break;
                 case "METRO":
-                    stopFetcher = new MetroStopFetcher(sta, terminus);
+                    stopFetcher = new MetroStopFetcher(sta, terminus, lineId);
                     break;
                 case "RER":
-                    stopFetcher = new RERStopFetcher(sta, terminus);
+                    stopFetcher = new RERStopFetcher(sta, terminus, lineId);
                     break;
                 case "TRAM":
-                    stopFetcher = new TramStopFetcher(sta, terminus);
+                    stopFetcher = new TramStopFetcher(sta, terminus, lineId);
                     break;
             }
 
