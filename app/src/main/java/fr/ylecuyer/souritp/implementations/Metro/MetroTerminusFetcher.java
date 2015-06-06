@@ -37,7 +37,7 @@ public class MetroTerminusFetcher extends BaseTerminusFetcher {
             Element link = element.select("a").first();
             String href = link.attr("href");
 
-            String name = link.ownText();
+            String name = clean(link.ownText());
             String terminusId = extractTerminusId(href);
 
             Terminus terminus = new Terminus(name, terminusId);
@@ -52,4 +52,12 @@ public class MetroTerminusFetcher extends BaseTerminusFetcher {
         return href.substring(href.length() - 1);
     }
 
+    private String clean(String name) {
+        if (name.contains("»")) {
+            return name.substring("» ".length());
+        }
+        else {
+            return name;
+        }
+    }
 }
