@@ -54,13 +54,27 @@ public class RERStopFetcher extends BaseStopFetcher {
             String waitTime = "";
 
             try {
-                LocalTime time = LocalTime.parse(ETA);
+
+                String[] ETAsplitted = ETA.split(" ");
+                String timeETAString = ETAsplitted[0];
+
+                LocalTime time = LocalTime.parse(timeETAString);
                 waitTime = Minutes.minutesBetween(now, time).getMinutes() + " mn";
+
+                waitTime += " (";
+
+                for (int i = 1; i < ETAsplitted.length; i++) {
+                    if (i != 1) {
+                        waitTime += " ";
+                    }
+                    waitTime += ETAsplitted[i];
+                }
+
+                waitTime += ")";
             }
             catch (IllegalArgumentException ex) {
                 waitTime = ETA;
             }
-
 
             Stop stop = new Stop(terminus, waitTime);
 
