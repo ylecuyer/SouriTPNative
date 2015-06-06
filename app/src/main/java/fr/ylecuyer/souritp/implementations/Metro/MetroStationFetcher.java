@@ -28,7 +28,7 @@ public class MetroStationFetcher extends BaseStationFetcher {
     @Override
     public ArrayList<Station> getAllStations() {
 
-        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=metro&lineid=M"+line.getLineId()+"&directionsens="+direction.getValue()+"&referer=station&stationname=*";
+        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=metro&lineid=M"+line.getLineId().toUpperCase()+"&directionsens="+direction.getValue()+"&referer=station&stationname=*";
 
         String html = HttpRequest.get(url).body();
 
