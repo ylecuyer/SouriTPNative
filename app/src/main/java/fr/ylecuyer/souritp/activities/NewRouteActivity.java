@@ -34,6 +34,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.timroes.android.listview.EnhancedListView;
 import fr.ylecuyer.souritp.DAO.DaoRoute;
@@ -159,9 +161,22 @@ public class NewRouteActivity extends Activity {
 
             }
 
+            private Timer timer = new Timer();
+            private final long DELAY = 1000;//ms
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateDirections();
+                timer.cancel();
+
+                if (s.length() != 0) {
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            updateDirections();
+                        }
+                    }, DELAY);
+                }
             }
 
             @Override
