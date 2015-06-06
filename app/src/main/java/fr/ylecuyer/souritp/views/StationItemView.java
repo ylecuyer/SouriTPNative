@@ -43,7 +43,7 @@ public class StationItemView extends LinearLayout {
                 break;
             case "METRO":
                 modeImageView.setImageResource(R.drawable.metro);
-                lineImageView.setImageResource(getResources().getIdentifier("m"+station.getLine().getLineId().toLowerCase()+"_t", "drawable", getContext().getPackageName()));
+                lineImageView.setImageResource(getResources().getIdentifier("m"+station.getLine().getLineId().toLowerCase(), "drawable", getContext().getPackageName()));
                 break;
             case "RER":
                 modeImageView.setImageResource(R.drawable.rer);
