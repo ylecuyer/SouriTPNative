@@ -269,7 +269,7 @@ public class NewRouteActivity extends Activity {
     @Click
     void fab() {
 
-        String routeName = nameEditText.getText().toString();
+        String routeName = nameEditText.getText().toString().trim();
 
         if (routeName.isEmpty()) {
             nameEditText.setError("Route name can't be empty");
