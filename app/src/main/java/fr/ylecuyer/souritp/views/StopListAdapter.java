@@ -56,4 +56,9 @@ public class StopListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
 }
