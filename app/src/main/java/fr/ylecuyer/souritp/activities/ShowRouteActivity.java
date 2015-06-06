@@ -1,6 +1,8 @@
 package fr.ylecuyer.souritp.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,21 +71,18 @@ public class ShowRouteActivity extends Activity {
     }
 
     @ViewById
-    TextView nameView;
-
-    @ViewById
-    TextView lastRefreshView;
-
-    @ViewById
     ListView stopList;
 
     @Bean
     StopListAdapter adapter;
 
+    private ActionBar actionBar;
+
     @AfterViews
     void init() {
-        nameView.setText(route.getName());
-        lastRefreshView.setText("-- : --");
+        actionBar = getActionBar();
+        actionBar.setTitle(route.getName());
+        actionBar.setSubtitle("Last update: -- : --");
     }
 
     @AfterViews
@@ -139,7 +138,7 @@ public class ShowRouteActivity extends Activity {
     @UiThread
     void updateAdapter(ArrayList<Stop> stops) {
         LocalTime now = LocalTime.now();
-        lastRefreshView.setText(now.toString("HH:mm"));
+        actionBar.setSubtitle("Last update: " + now.toString("HH:mm"));
         adapter.setStops(stops);
     }
 
