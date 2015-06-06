@@ -81,10 +81,10 @@ public class StopComparator implements Comparator<Stop> {
     }
 
     private boolean isArrete(Stop stop) {
-        return stop.getWaitTime().contains("A l'arret");
+        return stop.getWaitTime().contains("l'arret") || stop.getWaitTime().contains("quai");
     }
 
     private boolean isEnApproche(Stop stop) {
-        return stop.getWaitTime().contains("A l'approche");
+        return stop.getWaitTime().contains("l'approche");
     }
 }
