@@ -82,7 +82,7 @@ public class RERStopFetcher extends BaseStopFetcher {
                 waitTime = ETA;
             }
 
-            Stop stop = new Stop(terminus, waitTime, line);
+            Stop stop = new Stop(terminus, waitTime, line, station);
 
             if (BuildConfig.DEBUG)
                 Log.d("SouriTP", stop.toString());

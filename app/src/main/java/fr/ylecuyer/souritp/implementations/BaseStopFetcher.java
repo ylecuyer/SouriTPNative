@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
-import fr.ylecuyer.souritp.interfaces.Direction;
 import fr.ylecuyer.souritp.interfaces.StopFetcher;
 
 public class BaseStopFetcher implements StopFetcher {

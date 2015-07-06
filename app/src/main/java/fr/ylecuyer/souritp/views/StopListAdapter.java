@@ -1,6 +1,7 @@
 package fr.ylecuyer.souritp.views;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,6 +20,8 @@ public class StopListAdapter extends BaseAdapter {
 
     List<Stop> stops = new ArrayList<Stop>();
 
+    private boolean displayStation = false;
+
     @RootContext
     Context context;
 
@@ -32,13 +35,41 @@ public class StopListAdapter extends BaseAdapter {
             stopItemView = (StopItemView) convertView;
         }
 
-        stopItemView.bind(getItem(position));
+        stopItemView.bind(getItem(position), displayStation);
 
         return stopItemView;
     }
 
     public void setStops(List<Stop> stops) {
         this.stops = stops;
+
+        displayStation = false;
+
+        int nb_stops = stops.size();
+
+        outerLoop:
+        for (int i = 0; i < nb_stops; i++) {
+            Stop stopi = stops.get(i);
+            for (int j = i+1; j < nb_stops; j++) {
+                Stop stopj = stops.get(j);
+
+                String stopi_mode = stopi.getLine().getMode();
+                String stopi_line = stopi.getLine().getLineId();
+                String stopi_stationId = stopi.getStation().getStationId();
+
+                String stopj_mode = stopj.getLine().getMode();
+                String stopj_line = stopj.getLine().getLineId();
+                String stopj_stationId = stopj.getStation().getStationId();
+
+                if (stopi_mode.equalsIgnoreCase(stopj_mode) && stopi_line.equalsIgnoreCase(stopj_line) && !stopi_stationId.equalsIgnoreCase(stopj_stationId)) {
+                    displayStation = true;
+                    break outerLoop;
+                }
+            }
+
+            Log.d("SouriTP",  ""+displayStation);
+        }
+
         this.notifyDataSetChanged();
     }
 

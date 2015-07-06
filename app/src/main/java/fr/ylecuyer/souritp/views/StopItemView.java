@@ -29,11 +29,19 @@ public class StopItemView extends LinearLayout {
         super(context);
     }
 
-    public void bind(Stop stop) {
-        stopTextView.setText(stop.getWaitTime());
-        terminusTextView.setText(stop.getTerminus());
+    public void bind(Stop stop, boolean displayStation) {
 
-        switch (stop.getLine().getMode().toUpperCase()) {
+        stopTextView.setText(stop.getWaitTime());
+
+        String mode = stop.getLine().getMode().toUpperCase();
+
+        if (displayStation && !stop.getTerminus().isEmpty() && !mode.equalsIgnoreCase("BUS")) {
+            terminusTextView.setText(stop.getStation().getName() + " - " + stop.getTerminus());
+        } else {
+            terminusTextView.setText(stop.getTerminus());
+        }
+
+        switch (mode) {
             case "BUS":
                 imageView.setImageResource(getResources().getIdentifier("b"+stop.getLine().getLineId(), "drawable", getContext().getPackageName()));
                 break;

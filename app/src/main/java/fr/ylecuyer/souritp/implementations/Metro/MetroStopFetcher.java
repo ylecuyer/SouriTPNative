@@ -49,7 +49,7 @@ public class MetroStopFetcher extends BaseStopFetcher {
             String terminus = td.first().ownText();
             String waitTime = td.last().ownText();
 
-            Stop stop = new Stop(terminus, waitTime, line);
+            Stop stop = new Stop(terminus, waitTime, line, station);
 
             if (BuildConfig.DEBUG)
                 Log.d("SouriTP", stop.toString());

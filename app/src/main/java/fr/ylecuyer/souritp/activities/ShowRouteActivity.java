@@ -2,15 +2,8 @@ package fr.ylecuyer.souritp.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Notification;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -26,11 +19,9 @@ import org.androidannotations.annotations.OrmLiteDao;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.joda.time.LocalTime;
-import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import fr.ylecuyer.souritp.BuildConfig;
@@ -47,9 +38,7 @@ import fr.ylecuyer.souritp.implementations.Bus.BusStopFetcher;
 import fr.ylecuyer.souritp.implementations.Metro.MetroStopFetcher;
 import fr.ylecuyer.souritp.implementations.RER.RERStopFetcher;
 import fr.ylecuyer.souritp.implementations.Tram.TramStopFetcher;
-import fr.ylecuyer.souritp.interfaces.Direction;
 import fr.ylecuyer.souritp.interfaces.StopFetcher;
-import fr.ylecuyer.souritp.views.RouteListAdapter;
 import fr.ylecuyer.souritp.views.StopListAdapter;
 
 @EActivity(R.layout.activity_show_route)

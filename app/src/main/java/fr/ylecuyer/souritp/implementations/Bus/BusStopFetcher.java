@@ -52,7 +52,7 @@ public class BusStopFetcher extends BaseStopFetcher {
                 terminus = "";
             }
 
-            Stop stop = new Stop(terminus, waitTime, line);
+            Stop stop = new Stop(terminus, waitTime, line, station);
 
             if (BuildConfig.DEBUG)
                 Log.d("SouriTP", stop.toString());

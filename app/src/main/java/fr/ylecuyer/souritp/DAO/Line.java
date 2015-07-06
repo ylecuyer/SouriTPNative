@@ -26,6 +26,10 @@ public class Line {
         return mode;
     }
 
+    public String getHash() {
+        return mode + lineId;
+    }
+
     @Override
     public String toString() {
         return "Line{" +
