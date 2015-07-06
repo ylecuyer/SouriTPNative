@@ -54,6 +54,6 @@ public class StopItemView extends LinearLayout {
             case "TRAM":
                 imageView.setImageResource(getResources().getIdentifier("tram_t"+stop.getLine().getLineId().toLowerCase()+"_1", "drawable", getContext().getPackageName()));
                 break;
-        }    }
-
+        }
+    }
 }
