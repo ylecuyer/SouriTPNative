@@ -65,16 +65,18 @@ public class RERStopFetcher extends BaseStopFetcher {
                 LocalTime time = LocalTime.parse(timeETAString);
                 waitTime = Minutes.minutesBetween(now, time).getMinutes() + " mn";
 
-                waitTime += " (";
+                if (ETAsplitted.length > 1) {
+                    waitTime += " (";
 
-                for (int i = 1; i < ETAsplitted.length; i++) {
-                    if (i != 1) {
-                        waitTime += " ";
+                    for (int i = 1; i < ETAsplitted.length; i++) {
+                        if (i != 1) {
+                            waitTime += " ";
+                        }
+                        waitTime += ETAsplitted[i];
                     }
-                    waitTime += ETAsplitted[i];
-                }
 
-                waitTime += ")";
+                    waitTime += ")";
+                }
             }
             catch (IllegalArgumentException ex) {
                 waitTime = ETA;
