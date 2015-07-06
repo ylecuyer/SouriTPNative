@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
@@ -31,6 +32,9 @@ public class BusTerminusFetcher extends BaseTerminusFetcher {
         String url = "http://wap.ratp.fr/siv/schedule?referer=line&service=next&reseau=bus&stationname=&linecode="+line.getLineId()+"&submitAction=Valider";
 
         String html = HttpRequest.get(url).body();
+
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", html);
 
         Document doc = Jsoup.parse(html);
 

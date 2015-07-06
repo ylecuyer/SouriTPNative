@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.implementations.BaseStationFetcher;
@@ -20,9 +21,6 @@ public class RERStationFetcher extends BaseStationFetcher {
 
     public RERStationFetcher(Line line, Direction direction) {
         super(line, direction);
-
-        if (!line.getLineId().toLowerCase().matches("a|b"))
-            throw new UnsupportedOperationException("Contact yoann.lecuyer@gmail.com");
     }
 
     @Override
@@ -50,7 +48,8 @@ public class RERStationFetcher extends BaseStationFetcher {
 
             stations.add(station);
 
-            Log.d("SouriTP", station.toString());
+            if (BuildConfig.DEBUG)
+                Log.d("SouriTP", station.toString());
         }
 
 

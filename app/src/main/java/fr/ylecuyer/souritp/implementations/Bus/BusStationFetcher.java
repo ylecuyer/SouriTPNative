@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.implementations.BaseStationFetcher;
@@ -21,9 +22,6 @@ public class BusStationFetcher extends BaseStationFetcher {
 
     public BusStationFetcher(Line line, Direction direction) {
         super(line, direction);
-
-        //if (lineId.matches("100|13[06]|14[29]|155|19[38]|20[024-59]|21[8-9]|22[2-9]|23[1-3]|24[2-35-6]|25[79]|26[03-6]|27[137]|28[0247-8]|29[68]|30[59]|31[13-6]|32[46-9]|33[1-25-68-9]|34[2-5]|35[39]|36[24-59]|37[13-7]|38[0-56-7]|39[7-8]|40\\d|41\\d|42[02-57-9]|43\\d|44\\d|45[0-8]|46[1-68]|47[02-9]|48[0-49]|"))
-        //    throw new UnsupportedOperationException("Contact yoann.lecuyer@gmail.com");
     }
 
     @Override
@@ -51,7 +49,8 @@ public class BusStationFetcher extends BaseStationFetcher {
 
             stations.add(station);
 
-            Log.d("SouriTP", station.toString());
+            if (BuildConfig.DEBUG)
+                Log.d("SouriTP", station.toString());
         }
 
 

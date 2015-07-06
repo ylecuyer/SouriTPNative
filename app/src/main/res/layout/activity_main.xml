@@ -12,7 +12,9 @@
         android:divider="@color/light_gray"
         android:dividerHeight="3px"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        />
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab"
@@ -25,5 +27,6 @@
         fab:fab_colorPressed="@color/accent_light"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="8dp" />
 </RelativeLayout>

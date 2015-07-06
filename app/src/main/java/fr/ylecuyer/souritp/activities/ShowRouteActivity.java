@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.DaoRoute;
 import fr.ylecuyer.souritp.DAO.DaoStation;
 import fr.ylecuyer.souritp.DAO.Line;
@@ -93,7 +95,10 @@ public class ShowRouteActivity extends Activity {
 
     @Background
     void updateStops() {
-        Log.d("SouriTP", "Update stops");
+
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "Update stops");
+
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
         ForeignCollection<DaoStation> stations = route.getStations();

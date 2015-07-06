@@ -2,6 +2,11 @@ package fr.ylecuyer.souritp.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -38,6 +43,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.timroes.android.listview.EnhancedListView;
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.DaoRoute;
 import fr.ylecuyer.souritp.DAO.DaoStation;
 import fr.ylecuyer.souritp.DAO.Line;
@@ -45,15 +51,20 @@ import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.R;
 import fr.ylecuyer.souritp.database.DatabaseHelper;
+import fr.ylecuyer.souritp.implementations.Bus.BusLineChecker;
 import fr.ylecuyer.souritp.implementations.Bus.BusStationFetcher;
 import fr.ylecuyer.souritp.implementations.Bus.BusTerminusFetcher;
+import fr.ylecuyer.souritp.implementations.Metro.MetroLineChecker;
 import fr.ylecuyer.souritp.implementations.Metro.MetroStationFetcher;
 import fr.ylecuyer.souritp.implementations.Metro.MetroTerminusFetcher;
+import fr.ylecuyer.souritp.implementations.RER.RERLineChecker;
 import fr.ylecuyer.souritp.implementations.RER.RERStationFetcher;
 import fr.ylecuyer.souritp.implementations.RER.RERTerminusFetcher;
+import fr.ylecuyer.souritp.implementations.Tram.TramLineChecker;
 import fr.ylecuyer.souritp.implementations.Tram.TramStationFetcher;
 import fr.ylecuyer.souritp.implementations.Tram.TramTerminusFetcher;
 import fr.ylecuyer.souritp.interfaces.Direction;
+import fr.ylecuyer.souritp.interfaces.LineChecker;
 import fr.ylecuyer.souritp.interfaces.StationFetcher;
 import fr.ylecuyer.souritp.interfaces.TerminusFetcher;
 import fr.ylecuyer.souritp.views.StationListAdapter;
@@ -95,7 +106,6 @@ public class NewRouteActivity extends Activity {
     @AfterViews
     void bindAdapter() {
         adapter.setStations(stations);
-        stationList.setAdapter(adapter);
         stationList.setDismissCallback(new EnhancedListView.OnDismissCallback() {
             @Override
             public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, int i) {
@@ -110,6 +120,7 @@ public class NewRouteActivity extends Activity {
 
         View footerView = ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
         stationList.addFooterView(footerView);
+        stationList.setAdapter(adapter);
     }
 
     public void addStationClick(View v) {
@@ -122,7 +133,9 @@ public class NewRouteActivity extends Activity {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        Log.d("SouriTP", "Add station");
+
+                        if (BuildConfig.DEBUG)
+                            Log.d("SouriTP", "Add station");
 
                         Station station = (Station)stationSpinner.getSelectedItem();
 
@@ -190,17 +203,46 @@ public class NewRouteActivity extends Activity {
 
     @Background
     public void updateDirections() {
-        Log.d("SouriTP", "Updating directions");
 
-        ArrayList<Terminus> terminuses = new ArrayList<Terminus>();
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "Updating directions");
 
-        TerminusFetcher terminusFetcher = null;
+        if (!isNetworkAvailable()) {
+            displayNetworkAlert();
+            return;
+        }
 
         String mode = (String)modeSpinner.getSelectedItem();
 
         String lineId = lineText.getText().toString();
 
         Line line = new Line(lineId, null, mode.toUpperCase());
+
+        LineChecker lineChecker = null;
+
+        switch (mode.toUpperCase()) {
+            case "BUS":
+                lineChecker = new BusLineChecker(line);
+                break;
+            case "METRO":
+                lineChecker = new MetroLineChecker(line);
+                break;
+            case "TRAM":
+                lineChecker = new TramLineChecker(line);
+                break;
+            case "RER":
+                lineChecker = new RERLineChecker(line);
+                break;
+        }
+
+        if (!lineChecker.isValid()) {
+            displayLineError();
+            return;
+        }
+
+        ArrayList<Terminus> terminuses = new ArrayList<Terminus>();
+
+        TerminusFetcher terminusFetcher = null;
 
         switch (mode.toUpperCase()) {
             case "BUS":
@@ -233,13 +275,19 @@ public class NewRouteActivity extends Activity {
     public void updateStations() {
 
         String mode = (String)modeSpinner.getSelectedItem();
-        Log.d("SouriTP", "mode: " + mode);
+
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "mode: " + mode);
 
         String lineId = lineText.getText().toString();
-        Log.d("SouriTP", "line: " + lineId);
+
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "line: " + lineId);
 
         Terminus terminus = (Terminus)terminusSpinner.getSelectedItem();
-        Log.d("SouriTP", "terminus: " + terminus);
+
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "terminus: " + terminus);
 
         Line line = new Line(lineId, terminus, mode.toUpperCase());
 
@@ -301,7 +349,8 @@ public class NewRouteActivity extends Activity {
             return;
         }
 
-        Log.d("SouriTP", "Sauvegarde de la route");
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "Sauvegarde de la route");
 
         try {
 
@@ -319,5 +368,29 @@ public class NewRouteActivity extends Activity {
         catch (SQLException ex){
             ex.printStackTrace();
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnected();
+    }
+
+    @UiThread
+    void displayNetworkAlert() {
+        new MaterialDialog.Builder(this)
+                .title("Error")
+                .content("You must have internet active to use the app")
+                .positiveText("OK")
+                .show();
+    }
+
+    @UiThread
+    void displayLineError() {
+        new MaterialDialog.Builder(this)
+                .title("Error")
+                .content("This line is not valid")
+                .positiveText("OK")
+                .show();
     }
 }

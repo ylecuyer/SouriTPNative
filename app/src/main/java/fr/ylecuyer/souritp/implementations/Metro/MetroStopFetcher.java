@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
@@ -50,7 +51,8 @@ public class MetroStopFetcher extends BaseStopFetcher {
 
             Stop stop = new Stop(terminus, waitTime, line);
 
-            Log.d("SouriTP", stop.toString());
+            if (BuildConfig.DEBUG)
+                Log.d("SouriTP", stop.toString());
 
             stops.add(stop);
         }

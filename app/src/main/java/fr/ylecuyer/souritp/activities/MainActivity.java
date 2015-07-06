@@ -1,7 +1,13 @@
 package fr.ylecuyer.souritp.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Debug;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -10,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 
@@ -26,6 +33,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.DaoRoute;
 import fr.ylecuyer.souritp.DAO.DaoStation;
 import fr.ylecuyer.souritp.DAO.Line;
@@ -99,7 +107,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.d("SouriTP", "Showing route: " + id);
+        if (BuildConfig.DEBUG)
+            Log.d("SouriTP", "Showing route: " + id);
+
+        if (!isNetworkAvailable()) {
+            displayNetworkAlert();
+            return;
+        }
 
         ShowRouteActivity_.intent(this).routeId(id).start();
     }
@@ -143,5 +157,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnected();
+    }
+
+    void displayNetworkAlert() {
+        new MaterialDialog.Builder(this)
+                .title("Error")
+                .content("You must have internet active to use the app")
+                .positiveText("OK")
+                .show();
     }
 }

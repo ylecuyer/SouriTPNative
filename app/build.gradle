@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "fr.ylecuyer.souritp"
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -42,6 +42,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.7.3'
     compile 'joda-time:joda-time:2.7'
     compile 'com.android.support:support-annotations:22.2.0'
+    compile "com.android.support:appcompat-v7:21.0.+"
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.afollestad:material-dialogs:0.7.5.1'

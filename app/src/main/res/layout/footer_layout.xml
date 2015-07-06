@@ -8,5 +8,6 @@
         android:layout_height="wrap_content"
         android:text="Add station"
         android:id="@+id/addStationButton"
-        android:onClick="addStationClick" />
+        android:onClick="addStationClick"
+        android:layout_gravity="center"/>
 </LinearLayout>
