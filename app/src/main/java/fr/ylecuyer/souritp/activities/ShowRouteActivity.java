@@ -2,9 +2,13 @@ package fr.ylecuyer.souritp.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 
@@ -85,6 +89,11 @@ public class ShowRouteActivity extends Activity {
     @Background
     void updateStops() {
 
+        if (!isNetworkAvailable()) {
+            displayNetworkAlert();
+            return;
+        }
+
         if (BuildConfig.DEBUG)
             Log.d("SouriTP", "Update stops");
 
@@ -139,5 +148,19 @@ public class ShowRouteActivity extends Activity {
     @Click
     void fab() {
         updateStops();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnected();
+    }
+
+    void displayNetworkAlert() {
+        new MaterialDialog.Builder(this)
+                .title("Error")
+                .content("You must have internet active to use the app")
+                .positiveText("OK")
+                .show();
     }
 }
