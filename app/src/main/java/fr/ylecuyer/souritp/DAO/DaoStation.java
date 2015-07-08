@@ -25,7 +25,10 @@ public class DaoStation {
     private String terminusName;
 
     @DatabaseField(canBeNull = false)
-    private String mode;
+    private String type;
+
+    @DatabaseField(canBeNull = false, columnName = "mode")
+    private String typeId;
 
     @DatabaseField(canBeNull = false, foreign = true)
     private DaoRoute route;
@@ -33,21 +36,22 @@ public class DaoStation {
     public DaoStation() {
     }
 
-    public DaoStation(String name, String stationId, String lineId, String terminusId, String terminusName, String mode) {
+    public DaoStation(String name, String stationId, String lineId, String terminusId, String terminusName, String type, String typeId) {
         this.name = name;
         this.stationId = stationId;
         this.lineId = lineId;
         this.terminusId = terminusId;
         this.terminusName = terminusName;
-        this.mode = mode;
+        this.type = type;
+        this.typeId = typeId;
     }
 
     public void setRoute(DaoRoute route) {
         this.route = route;
     }
 
-    public String getMode() {
-        return mode;
+    public String getTypeId() {
+        return typeId;
     }
 
     public String getName() {
@@ -68,5 +72,9 @@ public class DaoStation {
 
     public String getTerminusName() {
         return terminusName;
+    }
+
+    public String getType() {
+        return type;
     }
 }

@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Metro;
+package fr.ylecuyer.souritp.implementations.RATP.Bus;
 
 import android.util.Log;
 
@@ -14,19 +14,19 @@ import java.util.ArrayList;
 import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
+import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.implementations.BaseStationFetcher;
-import fr.ylecuyer.souritp.interfaces.Direction;
 
-public class MetroStationFetcher extends BaseStationFetcher {
+public class BusStationFetcher extends BaseStationFetcher {
 
-    public MetroStationFetcher(Line line, Direction direction) {
-        super(line, direction);
+    public BusStationFetcher(Line line, Terminus terminus) {
+        super(line, terminus);
     }
 
     @Override
     public ArrayList<Station> getAllStations() {
 
-        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=metro&lineid=M"+line.getLineId().toUpperCase()+"&directionsens="+direction.getValue()+"&referer=station&stationname=*";
+        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=bus&lineid=B"+line.getLineId()+"&referer=station&stationname=*";
 
         String html = HttpRequest.get(url).body();
 

@@ -36,7 +36,7 @@ public class StationItemView extends LinearLayout {
         stationName.setText(station.getName());
         terminusName.setText(station.getLine().getTerminus().getName());
 
-        switch (station.getLine().getMode().toUpperCase()) {
+        switch (station.getLine().getType().getTypeId()) {
             case "BUS":
                 modeImageView.setImageResource(R.drawable.bus);
                 lineImageView.setImageResource(getResources().getIdentifier("b"+station.getLine().getLineId(), "drawable", getContext().getPackageName()));

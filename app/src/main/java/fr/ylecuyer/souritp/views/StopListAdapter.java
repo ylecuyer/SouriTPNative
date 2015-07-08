@@ -53,11 +53,11 @@ public class StopListAdapter extends BaseAdapter {
             for (int j = i+1; j < nb_stops; j++) {
                 Stop stopj = stops.get(j);
 
-                String stopi_mode = stopi.getLine().getMode();
+                String stopi_mode = stopi.getLine().getType().getTypeId();
                 String stopi_line = stopi.getLine().getLineId();
                 String stopi_stationId = stopi.getStation().getStationId();
 
-                String stopj_mode = stopj.getLine().getMode();
+                String stopj_mode = stopj.getLine().getType().getTypeId();
                 String stopj_line = stopj.getLine().getLineId();
                 String stopj_stationId = stopj.getStation().getStationId();
 

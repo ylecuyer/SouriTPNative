@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Metro;
+package fr.ylecuyer.souritp.implementations.RATP.Tram;
 
 import android.util.Log;
 
@@ -16,19 +16,19 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
-import fr.ylecuyer.souritp.interfaces.Direction;
+import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
-public class MetroStopFetcher extends BaseStopFetcher {
+public class TramStopFetcher extends BaseStopFetcher {
 
-    public MetroStopFetcher(Station station, Terminus terminus, String lineId) {
+    public TramStopFetcher(Station station, Terminus terminus, String lineId) {
         super(station, terminus, lineId);
     }
 
     @Override
     public ArrayList<Stop> nextStops() {
 
-        String url = "http://www.ratp.fr/horaires/fr/ratp/metro/prochains_passages/PP/"+station.getName()+"/"+station.getLine().getLineId()+"/"+terminus.getTerminusId();
+        String url = "http://www.ratp.fr/horaires/fr/ratp/tramway/prochains_passages/PP/T"+station.getLine().getLineId()+"/"+station.getName()+"/"+terminus.getTerminusId();
 
         url = HttpRequest.encode(url);
 
@@ -40,7 +40,8 @@ public class MetroStopFetcher extends BaseStopFetcher {
 
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
-        Line line = new Line(lineId, terminus, "METRO");
+        Type type = new Type("TRAM", "Tram", "RATP");
+        Line line = new Line(lineId, terminus, type);
 
         for (Element element : elements) {
 
@@ -59,4 +60,5 @@ public class MetroStopFetcher extends BaseStopFetcher {
 
         return stops;
     }
+
 }

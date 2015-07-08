@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.RER;
+package fr.ylecuyer.souritp.implementations.RATP.RER;
 
 import android.util.Log;
 
@@ -12,14 +12,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
-import fr.ylecuyer.souritp.interfaces.Direction;
+import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 
@@ -46,7 +45,8 @@ public class RERStopFetcher extends BaseStopFetcher {
 
         LocalTime now = new LocalTime();
 
-        Line line = new Line(lineId, terminus, "RER");
+        Type type = new Type("RER", "RER", "RATP");
+        Line line = new Line(lineId, terminus, type);
 
         for (Element element : elements) {
 

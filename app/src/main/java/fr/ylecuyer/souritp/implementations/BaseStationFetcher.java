@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
-import fr.ylecuyer.souritp.interfaces.Direction;
+import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.interfaces.StationFetcher;
 import fr.ylecuyer.souritp.interfaces.StopFetcher;
 
 public class BaseStationFetcher implements StationFetcher {
     
     protected Line line;
-    protected Direction direction;
+    protected Terminus terminus;
 
-    public BaseStationFetcher(Line line, Direction direction) {
+    public BaseStationFetcher(Line line, Terminus terminus) {
         this.line = line;
-        this.direction = direction;
+        this.terminus = terminus;
     }
 
     @Override

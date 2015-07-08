@@ -1,6 +1,8 @@
 package fr.ylecuyer.souritp.DAO;
 
-public class Terminus {
+import java.io.Serializable;
+
+public class Terminus implements Serializable {
 
     private String terminusId;
     private String name;

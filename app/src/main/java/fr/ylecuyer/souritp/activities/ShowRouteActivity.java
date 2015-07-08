@@ -35,13 +35,15 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
+import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.R;
 import fr.ylecuyer.souritp.StopComparator;
 import fr.ylecuyer.souritp.database.DatabaseHelper;
-import fr.ylecuyer.souritp.implementations.Bus.BusStopFetcher;
-import fr.ylecuyer.souritp.implementations.Metro.MetroStopFetcher;
-import fr.ylecuyer.souritp.implementations.RER.RERStopFetcher;
-import fr.ylecuyer.souritp.implementations.Tram.TramStopFetcher;
+import fr.ylecuyer.souritp.implementations.RATP.Bus.BusStopFetcher;
+import fr.ylecuyer.souritp.implementations.RATP.Metro.MetroStopFetcher;
+import fr.ylecuyer.souritp.implementations.RATP.RER.RERStopFetcher;
+import fr.ylecuyer.souritp.implementations.RATP.Tram.TramStopFetcher;
+import fr.ylecuyer.souritp.implementations.Transdev.TransdevStopFetcher;
 import fr.ylecuyer.souritp.interfaces.StopFetcher;
 import fr.ylecuyer.souritp.views.StopListAdapter;
 
@@ -102,32 +104,40 @@ public class ShowRouteActivity extends Activity {
         ForeignCollection<DaoStation> stations = route.getStations();
 
         for (DaoStation station : stations) {
-            String mode = station.getMode();
+            String typeCode = station.getType();
+            String typeId = station.getTypeId();
             String name = station.getName();
             String stationId = station.getStationId();
             String terminusId = station.getTerminusId();
             String lineId = station.getLineId();
             String terminusName = station.getTerminusName();
 
+            Type type = new Type(typeId, "", typeCode);
             Terminus terminus = new Terminus(terminusName, terminusId);
-            Line line = new Line(lineId, terminus, mode);
+            Line line = new Line(lineId, terminus, type);
             Station sta = new Station(name, stationId, line);
 
             StopFetcher stopFetcher = null;
 
-            switch (mode.toUpperCase()) {
-                case "BUS":
-                    stopFetcher = new BusStopFetcher(sta, terminus, lineId);
-                    break;
-                case "METRO":
-                    stopFetcher = new MetroStopFetcher(sta, terminus, lineId);
-                    break;
-                case "RER":
-                    stopFetcher = new RERStopFetcher(sta, terminus, lineId);
-                    break;
-                case "TRAM":
-                    stopFetcher = new TramStopFetcher(sta, terminus, lineId);
-                    break;
+            if (typeCode.equalsIgnoreCase("RATP")) {
+
+                switch (type.getTypeId()) {
+                    case "BUS":
+                        stopFetcher = new BusStopFetcher(sta, terminus, lineId);
+                        break;
+                    case "METRO":
+                        stopFetcher = new MetroStopFetcher(sta, terminus, lineId);
+                        break;
+                    case "RER":
+                        stopFetcher = new RERStopFetcher(sta, terminus, lineId);
+                        break;
+                    case "TRAM":
+                        stopFetcher = new TramStopFetcher(sta, terminus, lineId);
+                        break;
+                }
+            }
+            else if (typeCode.equalsIgnoreCase("TRANSDEV")) {
+                stopFetcher = new TransdevStopFetcher(sta, terminus, lineId);
             }
 
             stops.addAll(stopFetcher.nextStops());

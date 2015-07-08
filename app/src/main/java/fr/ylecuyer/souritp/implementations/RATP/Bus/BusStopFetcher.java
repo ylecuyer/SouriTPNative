@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Tram;
+package fr.ylecuyer.souritp.implementations.RATP.Bus;
 
 import android.util.Log;
 
@@ -16,21 +16,19 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
-import fr.ylecuyer.souritp.interfaces.Direction;
+import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
-public class TramStopFetcher extends BaseStopFetcher {
+public class BusStopFetcher extends BaseStopFetcher {
 
-    public TramStopFetcher(Station station, Terminus terminus, String lineId) {
+    public BusStopFetcher(Station station, Terminus terminus, String lineId) {
         super(station, terminus, lineId);
     }
 
     @Override
     public ArrayList<Stop> nextStops() {
 
-        String url = "http://www.ratp.fr/horaires/fr/ratp/tramway/prochains_passages/PP/T"+station.getLine().getLineId()+"/"+station.getName()+"/"+terminus.getTerminusId();
-
-        url = HttpRequest.encode(url);
+        String url = "http://www.ratp.fr/horaires/fr/ratp/bus/prochains_passages/PP/B"+station.getLine().getLineId()+"/"+station.getStationId()+"/"+terminus.getTerminusId();
 
         String html = HttpRequest.get(url).body();
 
@@ -40,7 +38,8 @@ public class TramStopFetcher extends BaseStopFetcher {
 
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
-        Line line = new Line(lineId, terminus, "TRAM");
+        Type type = new Type("BUS", "Bus", "RATP");
+        Line line = new Line(lineId, terminus, type);
 
         for (Element element : elements) {
 
@@ -48,6 +47,11 @@ public class TramStopFetcher extends BaseStopFetcher {
 
             String terminus = td.first().ownText();
             String waitTime = td.last().ownText();
+
+            if (waitTime.length() == 0) {
+                waitTime = terminus;
+                terminus = "";
+            }
 
             Stop stop = new Stop(terminus, waitTime, line, station);
 
@@ -59,5 +63,4 @@ public class TramStopFetcher extends BaseStopFetcher {
 
         return stops;
     }
-
 }

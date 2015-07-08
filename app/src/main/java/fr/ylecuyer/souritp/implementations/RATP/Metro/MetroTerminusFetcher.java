@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.RER;
+package fr.ylecuyer.souritp.implementations.RATP.Metro;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
@@ -13,16 +13,16 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.implementations.BaseTerminusFetcher;
 
-public class RERTerminusFetcher extends BaseTerminusFetcher {
+public class MetroTerminusFetcher extends BaseTerminusFetcher {
 
-    public RERTerminusFetcher(Line line) {
+    public MetroTerminusFetcher(Line line) {
         super(line);
     }
 
     @Override
     public ArrayList<Terminus> getAllTerminuses() {
 
-        String url = "http://wap.ratp.fr/siv/schedule-rer";
+        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=metro&linecode="+line.getLineId()+"&referer=line";
 
         String html = HttpRequest.get(url).body();
 
@@ -32,27 +32,19 @@ public class RERTerminusFetcher extends BaseTerminusFetcher {
 
         ArrayList<Terminus> terminuses = new ArrayList<Terminus>();
 
-        int offset = 0;
-
-        if (line.getLineId().toUpperCase().equals("B")) {
-            offset += 2;
-        }
-
-        for (int i = 0; i < 2; i++) {
-
-            Element element = elements.get(offset+i);
+        for (Element element : elements) {
 
             Element link = element.select("a").first();
             String href = link.attr("href");
 
-            String name = link.ownText();
+            String name = clean(link.ownText());
             String terminusId = extractTerminusId(href);
 
             Terminus terminus = new Terminus(name, terminusId);
 
             terminuses.add(terminus);
         }
-        
+
         return terminuses;
     }
 
@@ -60,4 +52,12 @@ public class RERTerminusFetcher extends BaseTerminusFetcher {
         return href.substring(href.length() - 1);
     }
 
+    private String clean(String name) {
+        if (name.contains("»")) {
+            return name.substring("» ".length());
+        }
+        else {
+            return name;
+        }
+    }
 }

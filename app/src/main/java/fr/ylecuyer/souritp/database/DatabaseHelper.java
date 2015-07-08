@@ -19,7 +19,7 @@ import fr.ylecuyer.souritp.R;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "souritpdb";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -38,10 +38,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource,
                           int oldVersion, int newVersion) {
+
         try {
-            TableUtils.dropTable(connectionSource, DaoRoute.class, false);
-            TableUtils.dropTable(connectionSource, DaoStation.class, false);
-            onCreate(database, connectionSource);
+
+            Dao<DaoStation, Integer> dao = getDao(DaoStation.class);
+
+            if (oldVersion < 2) {
+                dao.executeRaw("ALTER TABLE stations ADD COLUMN type VARCHAR");
+                dao.updateRaw("UPDATE stations SET type='RATP'");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

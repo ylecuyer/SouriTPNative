@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Bus;
+package fr.ylecuyer.souritp.implementations.RATP.Bus;
 
 import android.util.Log;
 
@@ -7,18 +7,13 @@ import com.github.kevinsawicki.http.HttpRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
 import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.Line;
-import fr.ylecuyer.souritp.DAO.Station;
-import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;
-import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 import fr.ylecuyer.souritp.implementations.BaseTerminusFetcher;
-import fr.ylecuyer.souritp.interfaces.Direction;
 
 public class BusTerminusFetcher extends BaseTerminusFetcher {
 

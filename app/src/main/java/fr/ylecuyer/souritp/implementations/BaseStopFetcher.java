@@ -2,6 +2,7 @@ package fr.ylecuyer.souritp.implementations;
 
 import java.util.ArrayList;
 
+import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.DAO.Terminus;

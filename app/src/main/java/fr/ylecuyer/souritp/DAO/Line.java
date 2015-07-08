@@ -1,17 +1,18 @@
 package fr.ylecuyer.souritp.DAO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Line {
+public class Line implements Serializable {
 
     private String lineId;
     private Terminus terminus;
-    private String mode;
+    private Type type;
 
-    public Line(String lineId, Terminus terminus, String mode) {
+    public Line(String lineId, Terminus terminus, Type type) {
         this.lineId = lineId;
         this.terminus = terminus;
-        this.mode = mode;
+        this.type = type;
     }
 
     public String getLineId() {
@@ -22,20 +23,20 @@ public class Line {
         return terminus;
     }
 
-    public String getMode() {
-        return mode;
+    public Type getType() {
+        return type;
     }
 
     public String getHash() {
-        return mode + lineId;
+        return type.getTypeId() + lineId;
     }
 
     @Override
     public String toString() {
         return "Line{" +
                 "lineId='" + lineId + '\'' +
-                ", terminus='" + terminus + '\'' +
-                ", mode='" + mode + '\'' +
+                ", terminus=" + terminus +
+                ", type=" + type +
                 '}';
     }
 }

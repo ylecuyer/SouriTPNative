@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Tram;
+package fr.ylecuyer.souritp.implementations.RATP.RER;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
@@ -13,16 +13,16 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.implementations.BaseTerminusFetcher;
 
-public class TramTerminusFetcher extends BaseTerminusFetcher {
+public class RERTerminusFetcher extends BaseTerminusFetcher {
 
-    public TramTerminusFetcher(Line line) {
+    public RERTerminusFetcher(Line line) {
         super(line);
     }
 
     @Override
     public ArrayList<Terminus> getAllTerminuses() {
 
-        String url = "http://wap.ratp.fr/siv/schedule-tram";
+        String url = "http://wap.ratp.fr/siv/schedule-rer";
 
         String html = HttpRequest.get(url).body();
 
@@ -34,34 +34,11 @@ public class TramTerminusFetcher extends BaseTerminusFetcher {
 
         int offset = 0;
 
-        switch (line.getLineId().toUpperCase()) {
-            case "1":
-                offset += 0*2;
-                break;
-            case "2":
-                offset += 1*2;
-                break;
-            case "3A":
-                offset += 2*2;
-                break;
-            case "3B":
-                offset += 3*2;
-                break;
-            case "5":
-                offset += 4*2;
-                break;
-            case "6":
-                offset += 5*2;
-                break;
-            case "7":
-                offset += 6*2;
-                break;
-            case "8":
-                offset += 7*2;
-                break;
+        if (line.getLineId().toUpperCase().equals("B")) {
+            offset += 2;
         }
 
-        for (int i = 0; i < 2; i++, offset++) {
+        for (int i = 0; i < 2; i++) {
 
             Element element = elements.get(offset+i);
 

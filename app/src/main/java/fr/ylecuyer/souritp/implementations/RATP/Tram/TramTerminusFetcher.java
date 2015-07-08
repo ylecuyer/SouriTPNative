@@ -1,4 +1,4 @@
-package fr.ylecuyer.souritp.implementations.Metro;
+package fr.ylecuyer.souritp.implementations.RATP.Tram;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
@@ -13,16 +13,16 @@ import fr.ylecuyer.souritp.DAO.Line;
 import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.implementations.BaseTerminusFetcher;
 
-public class MetroTerminusFetcher extends BaseTerminusFetcher {
+public class TramTerminusFetcher extends BaseTerminusFetcher {
 
-    public MetroTerminusFetcher(Line line) {
+    public TramTerminusFetcher(Line line) {
         super(line);
     }
 
     @Override
     public ArrayList<Terminus> getAllTerminuses() {
 
-        String url = "http://wap.ratp.fr/siv/schedule?service=next&reseau=metro&linecode="+line.getLineId()+"&referer=line";
+        String url = "http://wap.ratp.fr/siv/schedule-tram";
 
         String html = HttpRequest.get(url).body();
 
@@ -32,19 +32,50 @@ public class MetroTerminusFetcher extends BaseTerminusFetcher {
 
         ArrayList<Terminus> terminuses = new ArrayList<Terminus>();
 
-        for (Element element : elements) {
+        int offset = 0;
+
+        switch (line.getLineId().toUpperCase()) {
+            case "1":
+                offset += 0*2;
+                break;
+            case "2":
+                offset += 1*2;
+                break;
+            case "3A":
+                offset += 2*2;
+                break;
+            case "3B":
+                offset += 3*2;
+                break;
+            case "5":
+                offset += 4*2;
+                break;
+            case "6":
+                offset += 5*2;
+                break;
+            case "7":
+                offset += 6*2;
+                break;
+            case "8":
+                offset += 7*2;
+                break;
+        }
+
+        for (int i = 0; i < 2; i++, offset++) {
+
+            Element element = elements.get(offset+i);
 
             Element link = element.select("a").first();
             String href = link.attr("href");
 
-            String name = clean(link.ownText());
+            String name = link.ownText();
             String terminusId = extractTerminusId(href);
 
             Terminus terminus = new Terminus(name, terminusId);
 
             terminuses.add(terminus);
         }
-
+        
         return terminuses;
     }
 
@@ -52,12 +83,4 @@ public class MetroTerminusFetcher extends BaseTerminusFetcher {
         return href.substring(href.length() - 1);
     }
 
-    private String clean(String name) {
-        if (name.contains("»")) {
-            return name.substring("» ".length());
-        }
-        else {
-            return name;
-        }
-    }
 }

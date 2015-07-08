@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
@@ -33,7 +35,7 @@ public class StopItemView extends LinearLayout {
 
         stopTextView.setText(stop.getWaitTime());
 
-        String mode = stop.getLine().getMode().toUpperCase();
+        String mode = stop.getLine().getType().getTypeId();
 
         if (displayStation && !stop.getTerminus().isEmpty() && !mode.equalsIgnoreCase("BUS")) {
             terminusTextView.setText(stop.getStation().getName() + " - " + stop.getTerminus());
@@ -41,19 +43,25 @@ public class StopItemView extends LinearLayout {
             terminusTextView.setText(stop.getTerminus());
         }
 
-        switch (mode) {
-            case "BUS":
-                imageView.setImageResource(getResources().getIdentifier("b"+stop.getLine().getLineId(), "drawable", getContext().getPackageName()));
-                break;
-            case "METRO":
-                imageView.setImageResource(getResources().getIdentifier("m"+stop.getLine().getLineId().toLowerCase(), "drawable", getContext().getPackageName()));
-                break;
-            case "RER":
-                imageView.setImageResource(getResources().getIdentifier("p_rer_"+stop.getLine().getLineId().toLowerCase()+"_1", "drawable", getContext().getPackageName()));
-                break;
-            case "TRAM":
-                imageView.setImageResource(getResources().getIdentifier("tram_t"+stop.getLine().getLineId().toLowerCase()+"_1", "drawable", getContext().getPackageName()));
-                break;
+        if (stop.getLine().getType().getTypeCode().equalsIgnoreCase("RATP")) {
+
+            switch (mode) {
+                case "BUS":
+                    imageView.setImageResource(getResources().getIdentifier("b" + stop.getLine().getLineId(), "drawable", getContext().getPackageName()));
+                    break;
+                case "METRO":
+                    imageView.setImageResource(getResources().getIdentifier("m" + stop.getLine().getLineId().toLowerCase(), "drawable", getContext().getPackageName()));
+                    break;
+                case "RER":
+                    imageView.setImageResource(getResources().getIdentifier("p_rer_" + stop.getLine().getLineId().toLowerCase() + "_1", "drawable", getContext().getPackageName()));
+                    break;
+                case "TRAM":
+                    imageView.setImageResource(getResources().getIdentifier("tram_t" + stop.getLine().getLineId().toLowerCase() + "_1", "drawable", getContext().getPackageName()));
+                    break;
+            }
+        }
+        else if (stop.getLine().getType().getTypeCode().equalsIgnoreCase("TRANSDEV")) {
+            Picasso.with(getContext()).load("http://www.transdev-idf.com/ip/icon/" + stop.getLine().getType().getTypeId() + "-" + stop.getLine().getLineId()).into(imageView);
         }
     }
 }

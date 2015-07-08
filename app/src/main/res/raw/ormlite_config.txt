@@ -1,5 +1,5 @@
 #
-# generated on 2015/07/04 08:38:16
+# generated on 2015/07/08 11:21:38
 #
 # --table-start--
 dataClass=fr.ylecuyer.souritp.DAO.DaoRoute
@@ -48,7 +48,12 @@ fieldName=terminusName
 canBeNull=false
 # --field-end--
 # --field-start--
-fieldName=mode
+fieldName=type
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=typeId
+columnName=mode
 canBeNull=false
 # --field-end--
 # --field-start--
