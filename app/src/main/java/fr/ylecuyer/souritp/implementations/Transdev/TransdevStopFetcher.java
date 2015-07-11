@@ -8,6 +8,7 @@ import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 import com.googlecode.jcsv.reader.internal.DefaultCSVEntryParser;
 
+import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,7 +35,7 @@ public class TransdevStopFetcher extends BaseStopFetcher {
     @Override
     public ArrayList<Stop> nextStops() {
 
-        String url = "http://www.transdev-idf.com/ip/next_bus/" + station.getLine().getLineId() + "/" + station.getStationId() + "/" + terminus.getTerminusId();
+        String url = "http://www.transdev-idf.com/ip/next_bus/" + line.getType().getMode()+"-"+line.getLineId() + "/" + station.getStationId() + "/" + terminus.getTerminusId();
 
         url = HttpRequest.encode(url);
 
