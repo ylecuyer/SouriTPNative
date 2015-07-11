@@ -6,11 +6,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import fr.ylecuyer.souritp.DAO.Station;
 import fr.ylecuyer.souritp.R;
+import fr.ylecuyer.souritp.factories.LineImageFetcherFactory;
+import fr.ylecuyer.souritp.factories.ModeLogoFetcherFactory;
+import fr.ylecuyer.souritp.interfaces.LineImageFetcher;
+import fr.ylecuyer.souritp.interfaces.ModeLogoFetcher;
 
 @EViewGroup(R.layout.station_item)
 public class StationItemView extends LinearLayout {
@@ -36,24 +42,12 @@ public class StationItemView extends LinearLayout {
         stationName.setText(station.getName());
         terminusName.setText(station.getLine().getTerminus().getName());
 
-        switch (station.getLine().getType().getTypeId()) {
-            case "BUS":
-                modeImageView.setImageResource(R.drawable.bus);
-                lineImageView.setImageResource(getResources().getIdentifier("b"+station.getLine().getLineId(), "drawable", getContext().getPackageName()));
-                break;
-            case "METRO":
-                modeImageView.setImageResource(R.drawable.metro);
-                lineImageView.setImageResource(getResources().getIdentifier("m"+station.getLine().getLineId().toLowerCase(), "drawable", getContext().getPackageName()));
-                break;
-            case "RER":
-                modeImageView.setImageResource(R.drawable.rer);
-                lineImageView.setImageResource(getResources().getIdentifier("p_rer_"+station.getLine().getLineId().toLowerCase()+"_1", "drawable", getContext().getPackageName()));
-                break;
-            case "TRAM":
-                modeImageView.setImageResource(R.drawable.tram);
-                lineImageView.setImageResource(getResources().getIdentifier("tram_t"+station.getLine().getLineId().toLowerCase()+"_1", "drawable", getContext().getPackageName()));
-                break;
-        }
+
+        ModeLogoFetcher modeLogoFetcher = ModeLogoFetcherFactory.getModeLogoFetcher(station.getLine().getType().getTypeCode(), station.getLine().getType().getTypeId());
+        modeImageView.setImageResource(modeLogoFetcher.getModeLogoDrawableId());
+
+        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(station.getLine().getType().getTypeCode(), station.getLine().getType().getTypeId(), station.getLine());
+        Picasso.with(getContext()).load(lineImageFetcher.getLineImageURL()).into(lineImageView);
 
     }
 

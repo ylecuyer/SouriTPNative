@@ -11,9 +11,12 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import fr.ylecuyer.souritp.BuildConfig;
 import fr.ylecuyer.souritp.DAO.DaoRoute;
 import fr.ylecuyer.souritp.DAO.Stop;
 import fr.ylecuyer.souritp.R;
+import fr.ylecuyer.souritp.factories.LineImageFetcherFactory;
+import fr.ylecuyer.souritp.interfaces.LineImageFetcher;
 
 @EViewGroup(R.layout.stop_item)
 public class StopItemView extends LinearLayout {
@@ -43,25 +46,9 @@ public class StopItemView extends LinearLayout {
             terminusTextView.setText(stop.getTerminus());
         }
 
-        if (stop.getLine().getType().getTypeCode().equalsIgnoreCase("RATP")) {
+        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(stop.getLine().getType().getTypeCode(), mode, stop.getLine());
 
-            switch (mode) {
-                case "BUS":
-                    imageView.setImageResource(getResources().getIdentifier("b" + stop.getLine().getLineId(), "drawable", getContext().getPackageName()));
-                    break;
-                case "METRO":
-                    imageView.setImageResource(getResources().getIdentifier("m" + stop.getLine().getLineId().toLowerCase(), "drawable", getContext().getPackageName()));
-                    break;
-                case "RER":
-                    imageView.setImageResource(getResources().getIdentifier("p_rer_" + stop.getLine().getLineId().toLowerCase() + "_1", "drawable", getContext().getPackageName()));
-                    break;
-                case "TRAM":
-                    imageView.setImageResource(getResources().getIdentifier("tram_t" + stop.getLine().getLineId().toLowerCase() + "_1", "drawable", getContext().getPackageName()));
-                    break;
-            }
-        }
-        else if (stop.getLine().getType().getTypeCode().equalsIgnoreCase("TRANSDEV")) {
-            Picasso.with(getContext()).load("http://www.transdev-idf.com/ip/icon/" + stop.getLine().getType().getTypeId() + "-" + stop.getLine().getLineId()).into(imageView);
-        }
+        Picasso.with(getContext()).load(lineImageFetcher.getLineImageURL()).into(imageView);
+
     }
 }
