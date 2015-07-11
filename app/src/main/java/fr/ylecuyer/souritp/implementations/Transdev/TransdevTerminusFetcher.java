@@ -28,7 +28,7 @@ public class TransdevTerminusFetcher extends BaseTerminusFetcher {
     @Override
     public ArrayList<Terminus> getAllTerminuses() {
 
-        String url = "http://www.transdev-idf.com/ip/lines_of_linegroup_2/"+line.getType().getTypeId();
+        String url = "http://www.transdev-idf.com/ip/lines_of_linegroup_2/"+line.getType().getMode();
 
         String csv = HttpRequest.get(url).body();
 

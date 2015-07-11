@@ -28,7 +28,7 @@ public class Line implements Serializable {
     }
 
     public String getHash() {
-        return type.getTypeId() + lineId;
+        return type.getMode() + lineId;
     }
 
     @Override

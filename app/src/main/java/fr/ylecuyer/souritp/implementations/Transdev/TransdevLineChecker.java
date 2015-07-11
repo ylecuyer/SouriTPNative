@@ -17,7 +17,7 @@ public class TransdevLineChecker extends BaseLineChecker {
 
     @Override
     public boolean isValid() {
-        String url = "http://www.transdev-idf.com/ip/schema/"+line.getType().getTypeId()+"-"+line.getLineId()+"/0";
+        String url = "http://www.transdev-idf.com/ip/schema/"+line.getType().getMode()+"-"+line.getLineId()+"/0";
 
         String html = HttpRequest.get(url).body();
 

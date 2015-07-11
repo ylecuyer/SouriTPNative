@@ -18,6 +18,6 @@ public class TransdevLineImageFetcher extends BaseLineImageFetcher {
 
     @Override
     public String getLineImageURL() {
-        return "http://www.transdev-idf.com/ip/icon/" + line.getType().getTypeId() + "-" + line.getLineId();
+        return "http://www.transdev-idf.com/ip/icon/" + line.getType().getMode() + "-" + line.getLineId();
     }
 }

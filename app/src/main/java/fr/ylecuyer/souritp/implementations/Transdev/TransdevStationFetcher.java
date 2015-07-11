@@ -32,7 +32,7 @@ public class TransdevStationFetcher extends BaseStationFetcher {
     @Override
     public ArrayList<Station> getAllStations() {
 
-        String url = "http://www.transdev-idf.com/ip/schema/"+line.getType().getTypeId()+"-"+line.getLineId()+"/"+terminus.getTerminusId();
+        String url = "http://www.transdev-idf.com/ip/schema/"+line.getType().getMode()+"-"+line.getLineId()+"/"+terminus.getTerminusId();
 
         String csv = HttpRequest.get(url).body();
 

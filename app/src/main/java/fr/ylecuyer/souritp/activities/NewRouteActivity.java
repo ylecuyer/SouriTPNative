@@ -110,7 +110,7 @@ public class NewRouteActivity extends Activity implements MaterialDialog.ListCal
             routeDao.create(route);
 
             for (Station station : stations) {
-                DaoStation dao_station = new DaoStation(station.getName(), station.getStationId(), station.getLine().getLineId(), station.getLine().getTerminus().getTerminusId(), station.getLine().getTerminus().getName(), station.getLine().getType().getTypeCode(), station.getLine().getType().getTypeId());
+                DaoStation dao_station = new DaoStation(station.getName(), station.getStationId(), station.getLine().getLineId(), station.getLine().getTerminus().getTerminusId(), station.getLine().getTerminus().getName(), station.getLine().getType().getCompany(), station.getLine().getType().getMode());
                 dao_station.setRoute(route);
                 stationDao.create(dao_station);
             }

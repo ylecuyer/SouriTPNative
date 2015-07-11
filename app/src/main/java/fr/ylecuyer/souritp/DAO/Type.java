@@ -4,34 +4,25 @@ import java.io.Serializable;
 
 public class Type implements Serializable {
 
-    private String typeId;
+    private String mode;
     private String name;
-    private String typeCode;
+    private String company;
 
-    public Type(String typeId, String name, String typeCode) {
-        this.typeId = typeId;
+    public Type(String mode, String name, String company) {
+        this.mode = mode;
         this.name = name;
-        this.typeCode = typeCode;
+        this.company = company;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getMode() {
+        return mode;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    @Override
-    public String toString() {
-        return "Type{" +
-                "typeId='" + typeId + '\'' +
-                ", name='" + name + '\'' +
-                ", typeCode='" + typeCode + '\'' +
-                '}';
+    public String getCompany() {
+        return company;
     }
 }

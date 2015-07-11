@@ -43,10 +43,10 @@ public class StationItemView extends LinearLayout {
         terminusName.setText(station.getLine().getTerminus().getName());
 
 
-        ModeLogoFetcher modeLogoFetcher = ModeLogoFetcherFactory.getModeLogoFetcher(station.getLine().getType().getTypeCode(), station.getLine().getType().getTypeId());
+        ModeLogoFetcher modeLogoFetcher = ModeLogoFetcherFactory.getModeLogoFetcher(station.getLine().getType().getCompany(), station.getLine().getType().getMode());
         modeImageView.setImageResource(modeLogoFetcher.getModeLogoDrawableId());
 
-        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(station.getLine().getType().getTypeCode(), station.getLine().getType().getTypeId(), station.getLine());
+        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(station.getLine().getType().getCompany(), station.getLine().getType().getMode(), station.getLine());
         Picasso.with(getContext()).load(lineImageFetcher.getLineImageURL()).into(lineImageView);
 
     }

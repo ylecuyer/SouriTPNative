@@ -38,7 +38,7 @@ public class StopItemView extends LinearLayout {
 
         stopTextView.setText(stop.getWaitTime());
 
-        String mode = stop.getLine().getType().getTypeId();
+        String mode = stop.getLine().getType().getMode();
 
         if (displayStation && !stop.getTerminus().isEmpty() && !mode.equalsIgnoreCase("BUS")) {
             terminusTextView.setText(stop.getStation().getName() + " - " + stop.getTerminus());
@@ -46,7 +46,7 @@ public class StopItemView extends LinearLayout {
             terminusTextView.setText(stop.getTerminus());
         }
 
-        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(stop.getLine().getType().getTypeCode(), mode, stop.getLine());
+        LineImageFetcher lineImageFetcher = LineImageFetcherFactory.getLineImageFetcher(stop.getLine().getType().getCompany(), mode, stop.getLine());
 
         Picasso.with(getContext()).load(lineImageFetcher.getLineImageURL()).into(imageView);
 

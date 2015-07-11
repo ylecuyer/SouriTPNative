@@ -189,7 +189,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
         Type type = (Type)typeSpinner.getSelectedItem();
 
         if (BuildConfig.DEBUG)
-            Log.d("SouriTP", "mode: " + type.getTypeId());
+            Log.d("SouriTP", "mode: " + type.getMode());
 
         String lineId = lineText.getText().toString();
 
