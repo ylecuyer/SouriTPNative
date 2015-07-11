@@ -24,8 +24,8 @@ import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 public class RERStopFetcher extends BaseStopFetcher {
 
-    public RERStopFetcher(Station station, Terminus terminus, String lineId) {
-        super(station, terminus, lineId);
+    public RERStopFetcher(Station station, Terminus terminus, Line line) {
+        super(station, terminus, line);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RERStopFetcher extends BaseStopFetcher {
         LocalTime now = new LocalTime();
 
         Type type = new Type("RER", "RER", "RATP");
-        Line line = new Line(lineId, terminus, type);
+        Line lineb = new Line(line.getLineId(), terminus, type);
 
         for (Element element : elements) {
 
@@ -91,7 +91,7 @@ public class RERStopFetcher extends BaseStopFetcher {
                 waitTime = ETA;
             }
 
-            Stop stop = new Stop(terminus, waitTime, line, station);
+            Stop stop = new Stop(terminus, waitTime, lineb, station);
 
             if (BuildConfig.DEBUG)
                 Log.d("SouriTP", stop.toString());

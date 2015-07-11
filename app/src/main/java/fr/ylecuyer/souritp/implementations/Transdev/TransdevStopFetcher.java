@@ -27,8 +27,8 @@ import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 public class TransdevStopFetcher extends BaseStopFetcher {
 
-    public TransdevStopFetcher(Station station, Terminus terminus, String lineId) {
-        super(station, terminus, lineId);
+    public TransdevStopFetcher(Station station, Terminus terminus, Line line) {
+        super(station, terminus, line);
     }
 
     @Override

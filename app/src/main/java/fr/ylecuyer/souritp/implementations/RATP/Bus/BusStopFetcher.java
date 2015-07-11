@@ -21,8 +21,8 @@ import fr.ylecuyer.souritp.implementations.BaseStopFetcher;
 
 public class BusStopFetcher extends BaseStopFetcher {
 
-    public BusStopFetcher(Station station, Terminus terminus, String lineId) {
-        super(station, terminus, lineId);
+    public BusStopFetcher(Station station, Terminus terminus, Line line) {
+        super(station, terminus, line);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BusStopFetcher extends BaseStopFetcher {
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
         Type type = new Type("BUS", "Bus", "RATP");
-        Line line = new Line(lineId, terminus, type);
+        Line lineb = new Line(line.getLineId(), terminus, type);
 
         for (Element element : elements) {
 
@@ -53,7 +53,7 @@ public class BusStopFetcher extends BaseStopFetcher {
                 terminus = "";
             }
 
-            Stop stop = new Stop(terminus, waitTime, line, station);
+            Stop stop = new Stop(terminus, waitTime, lineb, station);
 
             if (BuildConfig.DEBUG)
                 Log.d("SouriTP", stop.toString());

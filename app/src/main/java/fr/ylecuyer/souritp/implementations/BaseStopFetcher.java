@@ -12,12 +12,12 @@ public class BaseStopFetcher implements StopFetcher {
 
     protected Station station;
     protected Terminus terminus;
-    protected String lineId;
+    protected Line line;
 
-    public BaseStopFetcher(Station station, Terminus terminus, String lineId) {
+    public BaseStopFetcher(Station station, Terminus terminus, Line line) {
         this.station = station;
         this.terminus = terminus;
-        this.lineId = lineId;
+        this.line = line;
     }
 
     @Override

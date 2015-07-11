@@ -118,7 +118,7 @@ public class ShowRouteActivity extends Activity {
             Line line = new Line(lineId, terminus, type);
             Station sta = new Station(name, stationId, line);
 
-            StopFetcher stopFetcher = StopFetcherFactory.getStopFetcher(company, mode, sta, terminus, lineId);
+            StopFetcher stopFetcher = StopFetcherFactory.getStopFetcher(company, mode, sta, terminus, line);
 
             stops.addAll(stopFetcher.nextStops());
         }
