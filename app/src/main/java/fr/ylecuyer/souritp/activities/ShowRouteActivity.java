@@ -39,6 +39,7 @@ import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.R;
 import fr.ylecuyer.souritp.StopComparator;
 import fr.ylecuyer.souritp.database.DatabaseHelper;
+import fr.ylecuyer.souritp.factories.StopFetcherFactory;
 import fr.ylecuyer.souritp.implementations.RATP.Bus.BusStopFetcher;
 import fr.ylecuyer.souritp.implementations.RATP.Metro.MetroStopFetcher;
 import fr.ylecuyer.souritp.implementations.RATP.RER.RERStopFetcher;
@@ -104,41 +105,20 @@ public class ShowRouteActivity extends Activity {
         ForeignCollection<DaoStation> stations = route.getStations();
 
         for (DaoStation station : stations) {
-            String typeCode = station.getType();
-            String typeId = station.getTypeId();
+            String company = station.getCompany();
+            String mode = station.getMode();
             String name = station.getName();
             String stationId = station.getStationId();
             String terminusId = station.getTerminusId();
             String lineId = station.getLineId();
             String terminusName = station.getTerminusName();
 
-            Type type = new Type(typeId, "", typeCode);
+            Type type = new Type(mode, "", company);
             Terminus terminus = new Terminus(terminusName, terminusId);
             Line line = new Line(lineId, terminus, type);
             Station sta = new Station(name, stationId, line);
 
-            StopFetcher stopFetcher = null;
-
-            if (typeCode.equalsIgnoreCase("RATP")) {
-
-                switch (type.getTypeId()) {
-                    case "BUS":
-                        stopFetcher = new BusStopFetcher(sta, terminus, lineId);
-                        break;
-                    case "METRO":
-                        stopFetcher = new MetroStopFetcher(sta, terminus, lineId);
-                        break;
-                    case "RER":
-                        stopFetcher = new RERStopFetcher(sta, terminus, lineId);
-                        break;
-                    case "TRAM":
-                        stopFetcher = new TramStopFetcher(sta, terminus, lineId);
-                        break;
-                }
-            }
-            else if (typeCode.equalsIgnoreCase("TRANSDEV")) {
-                stopFetcher = new TransdevStopFetcher(sta, terminus, lineId);
-            }
+            StopFetcher stopFetcher = StopFetcherFactory.getStopFetcher(company, mode, sta, terminus, lineId);
 
             stops.addAll(stopFetcher.nextStops());
         }

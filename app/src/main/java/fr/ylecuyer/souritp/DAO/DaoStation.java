@@ -24,11 +24,11 @@ public class DaoStation {
     @DatabaseField(canBeNull = false)
     private String terminusName;
 
-    @DatabaseField(canBeNull = false)
-    private String type;
+    @DatabaseField(canBeNull = false, columnName = "type")
+    private String company;//RATP,TRANSDEV
 
-    @DatabaseField(canBeNull = false, columnName = "mode")
-    private String typeId;
+    @DatabaseField(canBeNull = false)
+    private String mode;//BUS,METRO,RER,TRAM
 
     @DatabaseField(canBeNull = false, foreign = true)
     private DaoRoute route;
@@ -36,22 +36,22 @@ public class DaoStation {
     public DaoStation() {
     }
 
-    public DaoStation(String name, String stationId, String lineId, String terminusId, String terminusName, String type, String typeId) {
+    public DaoStation(String name, String stationId, String lineId, String terminusId, String terminusName, String company, String mode) {
         this.name = name;
         this.stationId = stationId;
         this.lineId = lineId;
         this.terminusId = terminusId;
         this.terminusName = terminusName;
-        this.type = type;
-        this.typeId = typeId;
+        this.company = company;
+        this.mode = mode;
     }
 
     public void setRoute(DaoRoute route) {
         this.route = route;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getMode() {
+        return mode;
     }
 
     public String getName() {
@@ -74,7 +74,7 @@ public class DaoStation {
         return terminusName;
     }
 
-    public String getType() {
-        return type;
+    public String getCompany() {
+        return company;
     }
 }

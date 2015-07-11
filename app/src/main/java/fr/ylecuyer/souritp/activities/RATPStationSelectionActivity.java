@@ -29,6 +29,9 @@ import fr.ylecuyer.souritp.DAO.Terminus;
 import fr.ylecuyer.souritp.DAO.Type;
 import fr.ylecuyer.souritp.EditTextWithButton;
 import fr.ylecuyer.souritp.R;
+import fr.ylecuyer.souritp.factories.LineCheckerFactory;
+import fr.ylecuyer.souritp.factories.StationFetcherFactory;
+import fr.ylecuyer.souritp.factories.TerminusFetcherFactory;
 import fr.ylecuyer.souritp.implementations.RATP.Bus.BusLineChecker;
 import fr.ylecuyer.souritp.implementations.RATP.Bus.BusStationFetcher;
 import fr.ylecuyer.souritp.implementations.RATP.Bus.BusTerminusFetcher;
@@ -54,7 +57,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
     EditTextWithButton lineText;
 
     @ViewById
-    Spinner typeSpinner;
+    Spinner modeSpinner;
 
     @ViewById
     Spinner terminusSpinner;
@@ -90,30 +93,15 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
             return;
         }
 
-        String typeString = (String) typeSpinner.getSelectedItem();
+        String mode = (String) modeSpinner.getSelectedItem();
 
         String lineId = lineText.getText().toString();
 
-        Type type = new Type(typeString.toUpperCase(), typeString, "RATP");
+        Type type = new Type(mode.toUpperCase(), mode, "RATP");
 
         Line line = new Line(lineId, null, type);
 
-        LineChecker lineChecker = null;
-
-        switch (type.getTypeId()) {
-            case "BUS":
-                lineChecker = new BusLineChecker(line);
-                break;
-            case "METRO":
-                lineChecker = new MetroLineChecker(line);
-                break;
-            case "TRAM":
-                lineChecker = new TramLineChecker(line);
-                break;
-            case "RER":
-                lineChecker = new RERLineChecker(line);
-                break;
-        }
+        LineChecker lineChecker = LineCheckerFactory.getLineChecker("RATP", mode, line);
 
         if (!lineChecker.isValid()) {
             displayLineError();
@@ -122,22 +110,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
 
         ArrayList<Terminus> terminuses = new ArrayList<Terminus>();
 
-        TerminusFetcher terminusFetcher = null;
-
-        switch (type.getTypeId()) {
-            case "BUS":
-                terminusFetcher = new BusTerminusFetcher(line);
-                break;
-            case "METRO":
-                terminusFetcher = new MetroTerminusFetcher(line);
-                break;
-            case "TRAM":
-                terminusFetcher = new TramTerminusFetcher(line);
-                break;
-            case "RER":
-                terminusFetcher = new RERTerminusFetcher(line);
-                break;
-        }
+        TerminusFetcher terminusFetcher = TerminusFetcherFactory.getTerminusFetcher("RATP", mode, line);
 
         terminuses = terminusFetcher.getAllTerminuses();
 
@@ -154,10 +127,10 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
     @Background
     public void updateStations() {
 
-        String typeString = (String) typeSpinner.getSelectedItem();
+        String mode = (String) modeSpinner.getSelectedItem();
 
         if (BuildConfig.DEBUG)
-            Log.d("SouriTP", "mode: " + typeString);
+            Log.d("SouriTP", "mode: " + mode);
 
         String lineId = lineText.getText().toString();
 
@@ -169,25 +142,10 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
         if (BuildConfig.DEBUG)
             Log.d("SouriTP", "terminus: " + terminus);
 
-        Type type = new Type(typeString.toUpperCase(), typeString, "RATP");
+        Type type = new Type(mode.toUpperCase(), mode, "RATP");
         Line line = new Line(lineId, terminus, type);
 
-        StationFetcher stationFetcher = null;
-
-        switch (type.getTypeId()) {
-            case "BUS":
-                stationFetcher = new BusStationFetcher(line, terminus);
-                break;
-            case "METRO":
-                stationFetcher = new MetroStationFetcher(line, terminus);
-                break;
-            case "TRAM":
-                stationFetcher = new TramStationFetcher(line, terminus);
-                break;
-            case "RER":
-                stationFetcher = new RERStationFetcher(line, terminus);
-                break;
-        }
+        StationFetcher stationFetcher = StationFetcherFactory.getStationFetcher("RATP", mode, line, terminus);
 
         ArrayList<Station> stations = stationFetcher.getAllStations();
 
