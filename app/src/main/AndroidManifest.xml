@@ -38,7 +38,8 @@
         <activity
             android:name=".activities.RATPStationSelectionActivity_"
             android:label="@string/title_activity_ratp_station_selection"
-            android:parentActivityName=".activities.NewRouteActivity_" >
+            android:parentActivityName=".activities.NewRouteActivity_"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.ylecuyer.souritp.activities.NewRouteActivity_" />
@@ -46,7 +47,8 @@
         <activity
             android:name=".activities.TransdevStationSelectionActivity_"
             android:label="@string/title_activity_transdev_station_selection"
-            android:parentActivityName=".activities.NewRouteActivity_" >
+            android:parentActivityName=".activities.NewRouteActivity_"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.ylecuyer.souritp.activities.NewRouteActivity_" />

@@ -15,7 +15,7 @@
         <item>Transdev</item>
     </string-array>
     <string name="title_activity_show_route">Show route</string>
-    <string name="title_activity_ratp_station_selection">RATPStationSelectionActivity</string>
-    <string name="title_activity_transdev_station_selection">TransdevStationSelectionActivity</string>
+    <string name="title_activity_ratp_station_selection">RATP</string>
+    <string name="title_activity_transdev_station_selection">Transdev</string>
     <string name="action_progress">Progress</string>
 </resources>
