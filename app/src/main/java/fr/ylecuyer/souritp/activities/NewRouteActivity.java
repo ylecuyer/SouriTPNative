@@ -42,7 +42,6 @@ public class NewRouteActivity extends Activity implements MaterialDialog.ListCal
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<DaoRoute, Long> routeDao;
 
-
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<DaoStation, Long> stationDao;
 
@@ -88,15 +87,15 @@ public class NewRouteActivity extends Activity implements MaterialDialog.ListCal
         String routeName = nameEditText.getText().toString().trim();
 
         if (routeName.isEmpty()) {
-            nameEditText.setError("Route name can't be empty");
+            nameEditText.setError(getString(R.string.name_error));
             return;
         }
 
         if (stations.size() == 0) {
             new MaterialDialog.Builder(this)
-                    .title("Error")
-                    .content("You should add at least one station")
-                    .positiveText("OK")
+                    .title(getString(R.string.error))
+                    .content(getString(R.string.at_least_one_station))
+                    .positiveText(getString(R.string.OK))
                     .show();
             return;
         }

@@ -119,9 +119,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         long routeId = listView.getAdapter().getItemId(position);
 
         switch(item.getItemId()) {
-            case R.id.edit:
-                // edit stuff here
-                return true;
             case R.id.delete:
 
                 try {

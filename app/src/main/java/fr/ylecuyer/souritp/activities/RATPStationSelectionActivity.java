@@ -177,18 +177,18 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
     @UiThread
     void displayNetworkAlert() {
         new MaterialDialog.Builder(this)
-                .title("Error")
-                .content("You must have internet active to use the app")
-                .positiveText("OK")
+                .title(getString(R.string.error))
+                .content(getString(R.string.internet_needed))
+                .positiveText(getString(R.string.OK))
                 .show();
     }
 
     @UiThread
     void displayLineError() {
         new MaterialDialog.Builder(this)
-                .title("Error")
-                .content("This line is not valid")
-                .positiveText("OK")
+                .title(getString(R.string.error))
+                .content(getString(R.string.invalid_line))
+                .positiveText(getString(R.string.OK))
                 .show();
     }
 

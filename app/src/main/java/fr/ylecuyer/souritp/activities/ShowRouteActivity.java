@@ -93,7 +93,7 @@ public class ShowRouteActivity extends Activity {
     void init() {
         actionBar = getActionBar();
         actionBar.setTitle(route.getName());
-        actionBar.setSubtitle("Last update: -- : --");
+        actionBar.setSubtitle(getString(R.string.last_update) + " -- : --");
     }
 
     @AfterViews
@@ -151,7 +151,7 @@ public class ShowRouteActivity extends Activity {
     @UiThread
     void updateAdapter(ArrayList<Stop> stops) {
         LocalTime now = LocalTime.now();
-        actionBar.setSubtitle("Last update: " + now.toString("HH:mm"));
+        actionBar.setSubtitle(getString(R.string.last_update) + " " + now.toString("HH:mm"));
         adapter.setStops(stops);
         fabProgressCircle.hide();
     }
@@ -170,9 +170,9 @@ public class ShowRouteActivity extends Activity {
 
     void displayNetworkAlert() {
         new MaterialDialog.Builder(this)
-                .title("Error")
-                .content("You must have internet active to use the app")
-                .positiveText("OK")
+                .title(getString(R.string.error))
+                .content(getString(R.string.internet_needed))
+                .positiveText(getString(R.string.OK))
                 .show();
     }
 }

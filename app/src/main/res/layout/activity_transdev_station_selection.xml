@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/custom_height"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Mode:"
+                android:text="@string/mode"
                 android:id="@+id/textView"
                 android:layout_column="0"
                 android:layout_marginRight="@dimen/custom_right_margin" />
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/custom_height"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Line:"
+                android:text="@string/line"
                 android:id="@+id/textView2"
                 android:layout_column="0"
                 android:layout_marginRight="@dimen/custom_right_margin" />
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/custom_height"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Direction:"
+                android:text="@string/direction"
                 android:id="@+id/textView3"
                 android:layout_column="0"
                 android:layout_marginRight="@dimen/custom_right_margin" />
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/custom_height"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Station:"
+                android:text="@string/station"
                 android:id="@+id/textView4"
                 android:layout_column="0"
                 android:layout_marginRight="@dimen/custom_right_margin" />
@@ -111,7 +111,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add"
         android:id="@+id/add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
