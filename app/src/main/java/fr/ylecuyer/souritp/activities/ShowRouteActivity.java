@@ -5,10 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gc.materialdesign.views.ProgressBarIndeterminate;
+import com.github.jorgecastilloprz.FABProgressCircle;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 
@@ -19,6 +26,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.OrmLiteDao;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -58,6 +67,7 @@ public class ShowRouteActivity extends Activity {
     Dao<DaoRoute, Long> routeDao;
 
     DaoRoute route;
+    private LayoutInflater inflater;
 
     @AfterInject
     void loadRoute() {
@@ -70,6 +80,9 @@ public class ShowRouteActivity extends Activity {
 
     @ViewById
     ListView stopList;
+
+    @ViewById
+    FABProgressCircle fabProgressCircle;
 
     @Bean
     StopListAdapter adapter;
@@ -85,8 +98,15 @@ public class ShowRouteActivity extends Activity {
 
     @AfterViews
     void bindAdapter() {
-        updateStops();
+        updateStopsUI();
         stopList.setAdapter(adapter);
+    }
+
+    @UiThread
+    void updateStopsUI() {
+        fabProgressCircle.measure(15, 15);
+        fabProgressCircle.show();
+        updateStops();
     }
 
     @Background
@@ -133,11 +153,13 @@ public class ShowRouteActivity extends Activity {
         LocalTime now = LocalTime.now();
         actionBar.setSubtitle("Last update: " + now.toString("HH:mm"));
         adapter.setStops(stops);
+        fabProgressCircle.hide();
     }
 
     @Click
     void fab() {
-        updateStops();
+        fabProgressCircle.show();
+        updateStopsUI();
     }
 
     private boolean isNetworkAvailable() {

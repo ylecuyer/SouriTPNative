@@ -53,4 +53,5 @@ dependencies {
     }
     compile 'com.googlecode.jcsv:jcsv:1.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
 }
