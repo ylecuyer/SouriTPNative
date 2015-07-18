@@ -106,8 +106,8 @@
     <orderEntry type="library" exported="" name="jcsv-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="fab-1.5.0" level="project" />
     <orderEntry type="library" exported="" name="EnhancedListView-0.3.4" level="project" />
-    <orderEntry type="library" exported="" name="jsoup-1.7.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="jsoup-1.7.3" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="http-request-6.0" level="project" />
