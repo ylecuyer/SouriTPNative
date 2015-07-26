@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -65,6 +66,9 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
     @ViewById
     Spinner stationSpinner;
 
+    @ViewById
+    ProgressBar progressBar;
+
     @Bean
     StationSpinnerAdapter stationSpinnerAdapter;
 
@@ -79,6 +83,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
 
     @Override
     public void buttonClicked() {
+        progressBar.setVisibility(View.VISIBLE);
         updateDirections();
     }
 
@@ -122,6 +127,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
         terminusSpinnerAdapter.setTerminuses(terminuses);
         terminusSpinnerAdapter.notifyDataSetChanged();
         terminusSpinner.setAdapter(terminusSpinnerAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Background
@@ -156,10 +162,12 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
     void updateStationSpinner(ArrayList<Station> stations) {
         stationSpinnerAdapter.setStations(stations);
         stationSpinner.setAdapter(stationSpinnerAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        progressBar.setVisibility(View.VISIBLE);
         updateStations();
     }
 

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -71,6 +72,9 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
     @ViewById
     Spinner stationSpinner;
 
+    @ViewById
+    ProgressBar progressBar;
+
     @Bean
     StationSpinnerAdapter stationSpinnerAdapter;
 
@@ -102,10 +106,12 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
     void updateTypeSpinner(ArrayList<Type> types) {
         typeSpinnerAdapter.setTypes(types);
         typeSpinnerAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void buttonClicked() {
+        progressBar.setVisibility(View.VISIBLE);
         updateDirections();
     }
 
@@ -147,6 +153,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
         terminusSpinnerAdapter.setTerminuses(terminuses);
         terminusSpinnerAdapter.notifyDataSetChanged();
         terminusSpinner.setAdapter(terminusSpinnerAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private boolean isNetworkAvailable() {
@@ -175,6 +182,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        progressBar.setVisibility(View.VISIBLE);
         updateStations();
     }
 
@@ -214,6 +222,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
     void updateStationSpinner(ArrayList<Station> stations) {
         stationSpinnerAdapter.setStations(stations);
         stationSpinner.setAdapter(stationSpinnerAdapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Click
