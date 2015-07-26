@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">SouriTP</string>
+
+    <string name="title_activity_new_route">Ajouter un trajet</string>
+    <string-array name="ratp_types">
+        <item>Bus</item>
+        <item>Tram</item>
+        <item>Metro</item>
+        <item>RER</item>
+    </string-array>
+    <string-array name="companies">
+        <item>RATP</item>
+        <item>Transdev</item>
+    </string-array>
+    <string name="title_activity_show_route">Trajet</string>
+    <string name="title_activity_ratp_station_selection">RATP</string>
+    <string name="title_activity_transdev_station_selection">Transdev</string>
+    <string name="name">Nom</string>
+    <string name="name_error">Le nom du trajet ne peut pas être vide</string>
+    <string name="error">Erreur</string>
+    <string name="at_least_one_station">vous devez ajouter au moins un arrêt</string>
+    <string name="OK">OK</string>
+    <string name="internet_needed">Vous devez avoir internet activé pour utiliser l\'application</string>
+    <string name="invalid_line">Cette ligne n\'est pas valide</string>
+    <string name="mode">Mode:</string>
+    <string name="line">Ligne:</string>
+    <string name="direction">Sens:</string>
+    <string name="station">Arrêt:</string>
+    <string name="add">Ajouter</string>
+    <string name="last_update">Actualisé à:</string>
+    <string name="edit">Editer</string>
+    <string name="delete">Supprimer</string>
+    <string name="line_must_be_set">Le nom de la ligne ne doit pas être vide</string>
+</resources>
