@@ -61,7 +61,7 @@ public class TramTerminusFetcher extends BaseTerminusFetcher {
                 break;
         }
 
-        for (int i = 0; i < 2; i++, offset++) {
+        for (int i = 0; i < 2; i++) {
 
             Element element = elements.get(offset+i);
 
