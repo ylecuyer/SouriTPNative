@@ -111,6 +111,10 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
 
     @Override
     public void buttonClicked() {
+        if (lineText.getText().toString().isEmpty()) {
+            lineText.setError(getString(R.string.line_must_be_set));
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         updateDirections();
     }
@@ -169,6 +173,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
                 .content(getString(R.string.internet_needed))
                 .positiveText(getString(R.string.OK))
                 .show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @UiThread
@@ -178,6 +183,7 @@ public class TransdevStationSelectionActivity extends Activity implements EditTe
                 .content(getString(R.string.invalid_line))
                 .positiveText(getString(R.string.OK))
                 .show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

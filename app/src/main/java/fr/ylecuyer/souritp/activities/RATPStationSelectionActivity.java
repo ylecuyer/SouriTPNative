@@ -83,6 +83,10 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
 
     @Override
     public void buttonClicked() {
+        if (lineText.getText().toString().isEmpty()) {
+            lineText.setError(getString(R.string.line_must_be_set));
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         updateDirections();
     }
@@ -189,6 +193,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
                 .content(getString(R.string.internet_needed))
                 .positiveText(getString(R.string.OK))
                 .show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @UiThread
@@ -198,6 +203,7 @@ public class RATPStationSelectionActivity extends Activity implements EditTextWi
                 .content(getString(R.string.invalid_line))
                 .positiveText(getString(R.string.OK))
                 .show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Click

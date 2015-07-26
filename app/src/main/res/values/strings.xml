@@ -30,4 +30,5 @@
     <string name="last_update">Last update:</string>
     <string name="edit">Edit</string>
     <string name="delete">delete</string>
+    <string name="line_must_be_set">Line name can\'t be empty</string>
 </resources>
